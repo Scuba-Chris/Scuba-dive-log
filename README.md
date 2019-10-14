@@ -5,19 +5,19 @@ Chris Ceder
 
 ___
 
-###Description
+### Description
 
 My app creates and a scuba dive log for the user. It stores each of the users dive ( dive #, max depth, duration, location, gear config., dive buddy). 
 
 ---
 
-###Problem domain
+### Problem domain
 
 There are a few different ways someone could store their dive log information. There are a few different apps and even paper log books available. These apps can be a bit buggy or not save all of the information from the dive that many techical divers would want.
 
 ---
 
-###User Stories
+### User Stories
 
 As a scuba diver, I want to be able to save all of the data from each of my dives. I want it to save the dive number, date, max depth, duration, locations, gear configuration/used, dive buddy.
 
