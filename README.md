@@ -3,6 +3,8 @@
 Created by:
 Chris Ceder
 
+Version: 1.0.0 - 10/14/2019
+
 ___
 
 ### Description
