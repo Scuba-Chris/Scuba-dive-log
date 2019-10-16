@@ -17,6 +17,7 @@ const app = express();
 const PORT = process.env.PORT || 3001;
 app.use(cors());
 app.use(express.urlencoded({ extended: true }));
+app.listen(PORT, () => console.log(`listening on ${PORT}`));
 
 app.use(methodoverride((req, res) => {
   if (req.body && typeof req.body === 'object' && '_method' in req.body) {
@@ -27,8 +28,8 @@ app.use(methodoverride((req, res) => {
 }))
 app.set('view engine', 'ejs');
 
-pgClient.connect()
-  .then(() => {
-    app.listen(PORT, () => console.log(`listening on ${PORT}`));
-  })
-  .catch(err => new Error(err).exit());
+// pgClient.connect()
+//   .then(() => {
+//     app.listen(PORT, () => console.log(`listening on ${PORT}`));
+//   })
+//   .catch(err => new Error(err).exit());

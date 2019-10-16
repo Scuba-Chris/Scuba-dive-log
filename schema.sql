@@ -12,7 +12,7 @@ CREATE TABLE diveData (
 );
 
 CREATE TABLE dive_site (
-  latitue INTEGER
+  latitude INTEGER,
   longitude INTEGER
 );
 
