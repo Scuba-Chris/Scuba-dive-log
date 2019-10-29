@@ -31,7 +31,8 @@ app.set('view engine', 'ejs');
  */
 
 app.get('/', diveHistory);
-app.post('/newDive', addNewDive);
+app.get('/newDive', addNewDive);
+app.post('/newDiveData', newDiveData);
 app.get('*', (request, response) => response.status(404).send('This route does not exist'));
 
 /**
@@ -39,6 +40,7 @@ app.get('*', (request, response) => response.status(404).send('This route does n
  */
 
 const client = new pg.Client(process.env.DATABASE_URL);
+client.connect();
 client.on('error', err => new Error(err).exit());
 
 // function diveHistory(request, response) {
@@ -48,11 +50,11 @@ client.on('error', err => new Error(err).exit());
 // }
 
 function diveHistory(request, response) {
-  let SQL = 'SELECT * from diveData;';
+  let SQL = 'SELECT * from divedata;';
   return client.query(SQL)
     .then(results => {
-      if (results.row.rowCount === 0) {
-        response.render('pages/add_dive')
+      if (results.row === 0) {
+        response.render('pages/newDive')
       } else {
         response.render('index')
         console.log('index');
@@ -62,7 +64,12 @@ function diveHistory(request, response) {
 }
 
 function addNewDive(request, response) {
+  console.log()
   response.render('pages/add_dive');
+}
+
+function newDiveData(request, response) {
+  console.log(require.body.date)
 }
 
 app.listen(PORT, () => console.log(`listening on ${PORT}`));
