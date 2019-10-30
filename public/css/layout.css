@@ -1,0 +1,10 @@
+section {
+    border: 2px solid black;
+    margin-top: 10px;
+}
+
+@media (min-width:768px) {
+    section {
+        margin: 5px;
+    }
+}

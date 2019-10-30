@@ -18,9 +18,9 @@
         <p> #
             <%= dives.length %> Dives </p>
         <% dives.forEach(dive => { %>
-            <article class="dives_sections">
+            <section class="dives_sections">
                 <%- include('./partials/eachDive', {dives : dive}) %>
-            </article>
+            </section>
             <% }) %>
 
     </main>

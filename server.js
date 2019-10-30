@@ -4,12 +4,12 @@
  *Dependencies
  */
 
+require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
 const pg = require('pg');
 const methodoverride = require('method-override');
 // const superagent = require('superagent');
-require('dotenv').config();
 
 const app = express();
 const PORT = process.env.PORT || 3001;
@@ -26,22 +26,24 @@ app.use(methodoverride((request, response) => {
 }));
 
 app.set('view engine', 'ejs');
+
+const client = new pg.Client(process.env.DATABASE_URL);
+client.connect();
+client.on('error', err => new Error(err).exit());
+
 /**
  * Routes
  */
 
 app.get('/', diveHistory);
-app.get('/newDive', addNewDive);
-app.post('/newDive', newDiveData);
+app.get('/newdive', addNewDive);
+app.post('/newdive', newDiveData);
 app.get('*', (request, response) => response.status(404).send('This route does not exist'));
 
 /**
  * From client
  */
 
-const client = new pg.Client(process.env.DATABASE_URL);
-client.connect();
-client.on('error', err => new Error(err).exit());
 
 // function diveHistory(request, response) {
 //   response.render('index')
@@ -67,10 +69,10 @@ function addNewDive(request, response) {
 }
 
 function newDiveData(request, response) {
-  // const makeDataLowerCase = request.body.diveData.tolowerCase();
+  console.log('im inside of this damn function');
   let { date, max_depth, avg_depth, duration, dive_site, dive_buddy, gear_config } = request.body;
-  let SQL = 'INSERT INTO divedata ( date, max_depth, avg_depth, duration, dive_site, dive_buddy, gear_config ) values ( $1, $2, $3, $4, $5, $6, $7 );';
-  let values = [date, max_depth, avg_depth, duration, dive_site, dive_buddy, gear_config];
+  let SQL = 'INSERT INTO divedata( date, max_depth, avg_depth, duration, dive_site, dive_buddy, gear_config ) VALUES( $1, $2, $3, $4, $5, $6, $7 );';
+  let values = [parseInt(date), parseInt(max_depth), parseInt(avg_depth), parseInt(duration), dive_site, dive_buddy, gear_config];
   return client.query(SQL, values)
     .then(() => response.redirect('/'))
   // .then(() => {
