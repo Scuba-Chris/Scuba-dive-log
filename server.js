@@ -32,7 +32,7 @@ app.set('view engine', 'ejs');
 
 app.get('/', diveHistory);
 app.get('/newDive', addNewDive);
-app.post('/newDiveData', newDiveData);
+app.post('/newDive', newDiveData);
 app.get('*', (request, response) => response.status(404).send('This route does not exist'));
 
 /**
@@ -53,23 +53,34 @@ function diveHistory(request, response) {
   let SQL = 'SELECT * from divedata;';
   return client.query(SQL)
     .then(results => {
-      if (results.row === 0) {
-        response.render('pages/newDive')
+      if (results.rows[0] === 0) {
+        response.render('pages/add_dive')
       } else {
-        response.render('index')
-        console.log('index');
+        response.render('index', { dives: results.rows })
       }
     })
     .catch(error => response.status(500).render('pages/error'), { error: 'yup, I fucked up' })
 }
 
 function addNewDive(request, response) {
-  console.log()
-  response.render('pages/add_dive');
+  response.render('pages/addDive');
 }
 
 function newDiveData(request, response) {
-  console.log(require.body.date)
+  // const makeDataLowerCase = request.body.diveData.tolowerCase();
+  let { date, max_depth, avg_depth, duration, dive_site, dive_buddy, gear_config } = request.body;
+  let SQL = 'INSERT INTO divedata ( date, max_depth, avg_depth, duration, dive_site, dive_buddy, gear_config ) values ( $1, $2, $3, $4, $5, $6, $7 );';
+  let values = [date, max_depth, avg_depth, duration, dive_site, dive_buddy, gear_config];
+  return client.query(SQL, values)
+    .then(() => response.redirect('/'))
+  // .then(() => {
+  //   SQL = 'SELECT * FROM divedata WHERE date=$1;';
+  //   values = [request.body.date];
+  //   return client.query(SQL, values)
+  //     .then(response.redirect('/'))
+  //     .catch(error => response.status(500).render('pages/error'))
+  // })
+    .catch(error => response.status(500).render('pages/error'));
 }
 
 app.listen(PORT, () => console.log(`listening on ${PORT}`));

@@ -1,8 +1,6 @@
-CREATE TABLE diveData (
+CREATE TABLE divedata (
   id SERIAL PRIMARY KEY,
-  year INTEGER,
-  month INTEGER,
-  day INTEGER,
+  date INTEGER,
   max_depth INTEGER,
   avg_depth INTEGER,
   duration INTEGER,
@@ -19,3 +17,6 @@ CREATE TABLE dive_site (
 -- CREATE TABLE gear_config (
 
 -- );
+
+INSERT INTO divedata (date, max_depth, avg_depth, duration, dive_site, dive_buddy, gear_config) values (10232019, 110, 60, 55, 'cozumel mexico', 
+'kevin ceder', 'BP&W');

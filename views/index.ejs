@@ -10,7 +10,18 @@
         <%- include('./partials/header') %>
     </header>
     <main>
-        <p>I am alive</p>
+        <nav>
+            <%- include('./partials/nav') %>
+        </nav>
+
+        <h2>Dive History</h2>
+        <p> #
+            <%= dives.length %> Dives </p>
+        <% dives.forEach(dive => { %>
+            <article class="dives_sections">
+                <%- include('./partials/eachDive', {dives : dive}) %>
+            </article>
+            <% }) %>
 
     </main>
 
