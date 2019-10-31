@@ -6,13 +6,28 @@
 </head>
 
 <body>
+    <header>
+        <%- include('./partials/header') %>
+    </header>
     <main>
-        <p>I am alive</p>
+        <nav>
+            <%- include('./partials/nav') %>
+        </nav>
+
+        <h2>Dive History</h2>
+        <p> #
+            <%= dives.length %> Dives </p>
+        <% dives.forEach(dive => { %>
+            <section class="dives_sections">
+                <%- include('./partials/eachDive', {dives : dive}) %>
+                    <a href="pages/details/<%= dive.id %>">Edit</a>
+            </section>
+            <% }) %>
 
     </main>
 
     <footer>
-        <%- include('./partials/footer')
+        <%- include('./partials/footer') %>
     </footer>
 
 </body>
