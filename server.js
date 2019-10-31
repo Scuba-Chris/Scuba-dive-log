@@ -28,7 +28,6 @@ app.use(methodoverride((request, response) => {
 app.set('view engine', 'ejs');
 
 const client = new pg.Client(process.env.DATABASE_URL);
-client.connect();
 client.on('error', err => new Error(err).exit());
 
 /**
@@ -38,18 +37,13 @@ client.on('error', err => new Error(err).exit());
 app.get('/', diveHistory);
 app.get('/newdive', addNewDive);
 app.post('/newdive', newDiveData);
+app.get('/pages/details/:dive_id', getDiveDetails)
+app.put('/pages/details/:dive_id', editDive)
 app.get('*', (request, response) => response.status(404).send('This route does not exist'));
 
 /**
  * From client
  */
-
-
-// function diveHistory(request, response) {
-//   response.render('index')
-//   // response.send('yellow');
-//   console.log('home route');
-// }
 
 function diveHistory(request, response) {
   let SQL = 'SELECT * from divedata;';
@@ -69,20 +63,36 @@ function addNewDive(request, response) {
 }
 
 function newDiveData(request, response) {
-  console.log('im inside of this damn function');
   let { date, max_depth, avg_depth, duration, dive_site, dive_buddy, gear_config } = request.body;
   let SQL = 'INSERT INTO divedata( date, max_depth, avg_depth, duration, dive_site, dive_buddy, gear_config ) VALUES( $1, $2, $3, $4, $5, $6, $7 );';
   let values = [parseInt(date), parseInt(max_depth), parseInt(avg_depth), parseInt(duration), dive_site, dive_buddy, gear_config];
   return client.query(SQL, values)
     .then(() => response.redirect('/'))
-  // .then(() => {
-  //   SQL = 'SELECT * FROM divedata WHERE date=$1;';
-  //   values = [request.body.date];
-  //   return client.query(SQL, values)
-  //     .then(response.redirect('/'))
-  //     .catch(error => response.status(500).render('pages/error'))
-  // })
     .catch(error => response.status(500).render('pages/error'));
 }
 
-app.listen(PORT, () => console.log(`listening on ${PORT}`));
+function getDiveDetails(request, response) {
+  let SQL = 'SELECT * FROM divedata WHERE id=$1;';
+  let values = [request.params.dive_id];
+  return client.query(SQL, values)
+    .then(results => response.render('pages/details', { dives: results.rows[0] }))
+    .catch(error => response.status(500).render('pages/error'))
+}
+
+function editDive(request, response) {
+  console.log('in the edit function')
+  let { date, max_depth, avg_depth, duration, dive_site, dive_buddy, gear_config } = request.body;
+  let SQL = 'INSERT INTO divedata SET date=$1, max_depth=$2, avg_depth=$3, duration=$4, dive_site=$5, dive_buddy=$6, gear_config=$7 WHERE id=$7;';
+  console.log(typeof parseInt(request.params.dive_id))
+  let values = [parseInt(date), parseInt(max_depth), parseInt(avg_depth), parseInt(duration), dive_site, dive_buddy, gear_config, parseInt(request.params.dive_id)];
+  return client.query(SQL, values)
+    .then(() => response.redirect('/'))
+    .catch(error => response.status(500).render('pages/error'))
+}
+
+client.connect()
+  .then(() => {
+    app.listen(PORT, () => {
+      console.log(`listening on ${PORT}`)
+    })
+  });

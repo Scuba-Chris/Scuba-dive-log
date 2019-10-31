@@ -1,0 +1,11 @@
+<form action="/pages/details/<%= dives.id %>" method="post">
+    <input type="hidden" name="_method" value="put">
+    <input type="text" name="date" value="<%= dives.date %>" required>
+    <input type="text" name="max_depth" value="<%= dives.max_depth %>" required>
+    <input type="text" name="avg_depth" value="<%= dives.avg_depth %>" required>
+    <input type="text" name="duration" value="<%= dives.duration %>" required>
+    <input type="text" name="dive_site" value="<%= dives.dive_site %>" required>
+    <input type="text" name="dive_buddy" value="<%= dives.dive_buddy %>">
+    <input type="text" name="gear_config" value="<%= dives.gear_config %>">
+    <button type="submit">Edit Dive</button>
+</form>
