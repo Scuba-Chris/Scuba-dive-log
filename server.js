@@ -39,6 +39,7 @@ app.get('/newdive', addNewDive);
 app.post('/newdive', newDiveData);
 app.get('/pages/details/:dive_id', getDiveDetails)
 app.put('/pages/details/:dive_id', editDive)
+app.delete('/pages/details/:dive_id', deleteDive)
 app.get('*', (request, response) => response.status(404).send('This route does not exist'));
 
 /**
@@ -46,7 +47,7 @@ app.get('*', (request, response) => response.status(404).send('This route does n
  */
 
 function diveHistory(request, response) {
-  let SQL = 'SELECT * from divedata;';
+  let SQL = 'SELECT * from divedata ORDER BY id;';
   return client.query(SQL)
     .then(results => {
       if (results.rows[0] === 0) {
@@ -80,12 +81,18 @@ function getDiveDetails(request, response) {
 }
 
 function editDive(request, response) {
-  console.log('in the edit function')
   let { date, max_depth, avg_depth, duration, dive_site, dive_buddy, gear_config } = request.body;
-  let SQL = 'INSERT INTO divedata SET date=$1, max_depth=$2, avg_depth=$3, duration=$4, dive_site=$5, dive_buddy=$6, gear_config=$7 WHERE id=$7;';
-  console.log(typeof parseInt(request.params.dive_id))
-  let values = [parseInt(date), parseInt(max_depth), parseInt(avg_depth), parseInt(duration), dive_site, dive_buddy, gear_config, parseInt(request.params.dive_id)];
+  let SQL = 'UPDATE divedata SET date=$1, max_depth=$2, avg_depth=$3, duration=$4, dive_site=$5, dive_buddy=$6, gear_config=$7 WHERE id=$8;';
+  let values = [parseInt(date), parseInt(max_depth), parseInt(avg_depth), parseInt(duration), dive_site, dive_buddy, gear_config, request.params.dive_id];
   return client.query(SQL, values)
+    .then(() => response.redirect('/'))
+    .catch(error => response.status(500).render('pages/error', { error: error }))
+}
+
+function deleteDive(request, response) {
+  let SQL = 'DELETE FROM divedata WHERE id=$1;'
+  let value = [request.params.dive_id]
+  return client.query(SQL, value)
     .then(() => response.redirect('/'))
     .catch(error => response.status(500).render('pages/error'))
 }

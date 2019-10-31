@@ -9,3 +9,8 @@
     <input type="text" name="gear_config" value="<%= dives.gear_config %>">
     <button type="submit">Edit Dive</button>
 </form>
+
+<form class="delete" action="/pages/details/<%= dives.id %>" method="post">
+    <input type="hidden" name="_method" value="delete">
+    <button type="submit">X</button>
+</form>
