@@ -30,27 +30,32 @@ footer {
 @media (min-width:768px) {
     body {
         width: 960px;
+        height: 100vh;
         display: flex;
         flex-direction: column;
+        margin: auto;
     }
     header {
         background-color: gray;
         display: flex;
         flex-direction: column;
-        height: 20%;
+        height: 10%;
         width: 100%;
     }
     main {
         background-color: darkgrey;
         display: flex;
+        flex: 1 0 auto;
         flex-direction: row;
         height: 60%;
     }
     footer {
         background-color: gray;
+        bottom: 0;
         display: flex;
         flex-direction: column;
-        height: 20%;
+        flex-shrink: 0;
+        height: 5%;
         width: 100%;
     }
 }

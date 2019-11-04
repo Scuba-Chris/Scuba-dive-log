@@ -3,8 +3,28 @@ section {
     margin-top: 10px;
 }
 
+h1 {
+    font-size: 3em;
+    text-align: center;
+    /* line-height: 50%; */
+}
+
+h2 {
+    display: block;
+}
+
 @media (min-width:768px) {
     section {
         margin: 5px;
+        height: auto;
+        overflow: hidden;
+        max-height: 200px;
+    }
+    nav {
+        background-color: slategrey;
+        width: 20%;
+    }
+    .form {
+        width: 80%;
     }
 }
