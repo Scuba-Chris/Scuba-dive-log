@@ -28,8 +28,7 @@ footer {
 @media (min-width:768px) {
     body {
         width: 1280px;
-        height: 100%;
-        margin: auto;
+        height: 100vh;
     }
     header {
         height: 10%;
@@ -37,13 +36,19 @@ footer {
     }
     .main_section {
         display: flex;
-        flex-direction: column;
-        width: 85%;
+        flex-direction: row;
+        flex: 1;
+        height: 85%;
+    }
+    .main_dive_section {
+        display: inline-flex;
+        flex-flow: row wrap;
     }
     main {
         background-color: darkgrey;
         display: flex;
-        flex-flow: row wrap;
+        flex-direction: column;
+        height: 85vh;
         width: 85%;
     }
     footer {
@@ -52,7 +57,10 @@ footer {
         flex-shrink: 0;
     }
     aside {
-        width: 20%;
-        height: 85%;
+        width: 15%;
+        height: 85vh;
+    }
+    #page_header {
+        display: inline-flex;
     }
 }

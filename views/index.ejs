@@ -20,13 +20,14 @@
                 <p id="dive_count"> #
                     <%= dives.length %> Dives </p>
             </section>
-
-            <% dives.forEach(dive => { %>
-                <section class="dives_sections">
-                    <%- include('./partials/eachDive', {dives : dive}) %>
-                        <a href="pages/details/<%= dive.id %>">Edit</a>
-                </section>
-                <% }) %>
+            <section class="main_dive_section">
+                <% dives.forEach(dive => { %>
+                    <section class="dives_sections">
+                        <%- include('./partials/eachDive', {dives : dive}) %>
+                            <a href="pages/details/<%= dive.id %>">Edit</a>
+                    </section>
+                    <% }) %>
+            </section>
         </main>
     </section>
     <footer>
