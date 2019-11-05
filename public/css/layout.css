@@ -1,9 +1,13 @@
-section {
-    border: 2px solid black;
-    margin-top: 10px;
+main {
+    background-color: darkgrey;
+}
+
+header {
+    background-color: gray;
 }
 
 h1 {
+    padding: 10px;
     font-size: 3em;
     text-align: center;
     /* line-height: 50%; */
@@ -13,18 +17,65 @@ h2 {
     display: block;
 }
 
+.dives_sections {
+    border: 2px solid black;
+    margin-top: 10px;
+    background-color: gray;
+    padding: 5px;
+}
+
+.dives_sections p {
+    font-size: ;
+}
+
+footer {
+    background-color: gray;
+    text-align: center;
+    margin: auto;
+}
+
+aside {
+    background-color: rgb(103, 104, 105);
+    text-align: center;
+    padding: 10px;
+}
+
+nav li {
+    display: inline-block;
+    font-size: 1.5em;
+}
+
+nav a {
+    color: black;
+}
+
+.form {
+    text-align: center;
+    padding: 10px;
+}
+
 @media (min-width:768px) {
-    section {
+    .dives_sections {
+        width: 300px;
         margin: 5px;
         height: auto;
         overflow: hidden;
         max-height: 200px;
     }
-    nav {
-        background-color: slategrey;
-        width: 20%;
+    nav li {
+        display: block;
+        padding: 10px;
+    }
+    nav ul li a {
+        font-size: 1em;
+    }
+    nav a:hover {
+        color: red;
     }
     .form {
         width: 80%;
+    }
+    #diveCount {
+        display: block;
     }
 }

@@ -6,18 +6,20 @@
 </head>
 
 <body>
-
     <header>
         <%- include('../partials/header') %>
     </header>
-
-    <main>
-        <nav>
+    <section class="main_section">
+        <aside>
             <%- include('../partials/nav') %>
-        </nav>
-        <%- include('../partials/newDiveForm') %>
-    </main>
+        </aside>
+        <main>
+            <section>
+                <%- include('../partials/newDiveForm') %>
+            </section>
 
+        </main>
+    </section>
     <footer>
         <%- include('../partials/footer') %>
     </footer>
