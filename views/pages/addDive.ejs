@@ -17,12 +17,23 @@
             <section>
                 <%- include('../partials/newDiveForm') %>
             </section>
+            <section class="map">
+                <div id='map' style='width: 600px; height: 500px;'></div>
+                <script>
+                    var map = new mapboxgl.Map({
+                        container: 'map',
+                        style: 'mapbox://styles/mapbox/streets-v11'
+                    });
+                </script>
+                <%- include('../partials/map') %>
+            </section>
 
         </main>
     </section>
     <footer>
         <%- include('../partials/footer') %>
     </footer>
+    <script src='https://api.mapbox.com/mapbox-gl-js/v1.4.1/mapbox-gl.js'></script>
 
 </body>
 

@@ -37,6 +37,7 @@ client.on('error', err => new Error(err).exit());
 app.get('/', diveHistory);
 app.get('/newdive', addNewDive);
 app.post('/newdive', newDiveData);
+// app.get('/newdive', diveSiteLocaton)
 app.get('/pages/details/:dive_id', getDiveDetails)
 app.put('/pages/details/:dive_id', editDive)
 app.delete('/pages/details/:dive_id', deleteDive)
@@ -45,6 +46,24 @@ app.get('*', (request, response) => response.status(404).send('This route does n
 /**
  * From client
  */
+
+function Location(diveSite) {
+  this.name = diveSite.text ? diveSite.text : 'no name';
+  this.xCoordinate = diveSite.xCoordinate;
+  this.yCoordinate = diveSite.yCoordinate;
+}
+
+function diveSiteLocaton(request, response) {
+  mapboxgl.accessToken = `${process.env.MAPBOX_API_KEY}`;
+  var map = new mapboxgl.Map({
+    container: 'map',
+    style: 'mapbox://styles/mapbox/streets-v11'
+  });
+  map.addControl(new mapboxgl.NavigationControl());
+
+  superagent.get(mapboxgl)
+    .then()
+}
 
 function diveHistory(request, response) {
   let SQL = 'SELECT * from divedata ORDER BY id;';
@@ -71,6 +90,7 @@ function newDiveData(request, response) {
     .then(() => response.redirect('/'))
     .catch(error => response.status(500).render('pages/error'));
 }
+
 
 function getDiveDetails(request, response) {
   let SQL = 'SELECT * FROM divedata WHERE id=$1;';
